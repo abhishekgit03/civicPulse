@@ -65,71 +65,25 @@ def delete_complaint(complaint_id: str) -> bool:
     except:
         return False
 
-def get_user_complaint_data():
-    """Get complaint data from user input"""
-    return {
-        "resident_name": input("Enter resident name: "),
-        "block": input("Enter block number: "),
-        "description": input("Enter complaint description: "),
-        "category": input("Enter category (Water/Electricity/Sanitation/Other): "),
-        "sentiment": input("Enter sentiment (positive/negative/neutral): "),
-        "severity_level": input("Enter severity level (low/medium/high): "),
-        "urgency_score": int(input("Enter urgency score (0-10): ")),
-        "llm_summary": input("Enter LLM summary: "),
-        "action_recommendation": input("Enter action recommendation: "),
-        "status": input("Enter status (open/in_progress/resolved): ")
-    }
-
 # Example usage/testing
 if __name__ == "__main__":
-    while True:
-        print("\nCivic Pulse Complaint Management System")
-        print("1. Create new complaint")
-        print("2. View complaint by ID")
-        print("3. View all complaints")
-        print("4. Update complaint")
-        print("5. Delete complaint")
-        print("6. Exit")
-        
-        choice = input("\nEnter your choice (1-6): ")
-        
-        try:
-            if choice == "1":
-                complaint_data = get_user_complaint_data()
-                new_id = create_complaint(complaint_data)
-                print(f"Created complaint with ID: {new_id}")
-                
-            elif choice == "2":
-                complaint_id = input("Enter complaint ID: ")
-                complaint = get_complaint(complaint_id)
-                print(f"Retrieved complaint: {complaint}")
-                
-            elif choice == "3":
-                complaints = get_all_complaints()
-                print(f"Total complaints: {len(complaints)}")
-                for complaint in complaints:
-                    print(f"\nID: {complaint['_id']}")
-                    print(f"Resident: {complaint['resident_name']}")
-                    print(f"Description: {complaint['description']}")
-                    print("-" * 50)
-                
-            elif choice == "4":
-                complaint_id = input("Enter complaint ID: ")
-                new_status = input("Enter new status: ")
-                success = update_complaint(complaint_id, {"status": new_status})
-                print(f"Update successful: {success}")
-                
-            elif choice == "5":
-                complaint_id = input("Enter complaint ID to delete: ")
-                success = delete_complaint(complaint_id)
-                print(f"Delete successful: {success}")
-                
-            elif choice == "6":
-                print("Exiting program...")
-                break
-                
-            else:
-                print("Invalid choice! Please try again.")
-                
-        except Exception as e:
-            print(f"Error: {str(e)}")
+    # Sample complaint data
+    sample_complaint = {
+        "resident_name": "John Doe",
+        "block": "B-123",
+        "description": "Water leakage in kitchen pipeline causing dampness in walls",
+        "category": "Water",
+        "sentiment": "negative",
+        "severity_level": "high",
+        "urgency_score": 8,
+        "llm_summary": "Urgent water leakage issue in kitchen requiring immediate plumbing intervention",
+        "action_recommendation": "Dispatch plumbing team for immediate inspection and repair",
+        "status": "open"
+    }
+
+    try:
+        # Create a test complaint
+        new_complaint_id = create_complaint(sample_complaint)
+        print(f"Created test complaint with ID: {new_complaint_id}")
+    except Exception as e:
+        print(f"Error creating test complaint: {str(e)}")
